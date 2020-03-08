@@ -1,6 +1,9 @@
 /* eslint-disable */
 const express = require("express");
-const expect = require("chai").expect;
+//const expect = require("chai").expect;
+const chai = require("chai")
+const expect = chai.expect;
+const should = chai.should();
 const path = require("path");
 const Nightmare = require("nightmare");
 
@@ -39,6 +42,54 @@ describe("End to End Tests", () => {
       .then(headerText => {
         expect(headerText).to.not.be.null;
         expect(headerText).to.equal("Mortgage Calculator");
+      });
+  });
+
+  it("should have 3 input elements", function() {
+    return pageObject
+      .evaluate(() => document.querySelectorAll('input').length)
+      .then(length => {
+        expect(length).to.equal(3)
+      });
+  });
+
+  it("should contain an input element named 'principal'", function() {
+    return pageObject
+      .evaluate(() => document.getElementsByName("principal").item(0))
+      .then(principal => {
+        should.exist(principal)
+      });
+  });
+
+  it("should contain an input element named 'interestRate'", function() {
+    return pageObject
+      .evaluate(() => document.getElementsByName("interestRate").item(0))
+      .then(ir => {
+        should.exist(ir)
+      });
+  });
+
+  it("should contain an input element named 'loanTerm'", function() {
+    return pageObject
+      .evaluate(() => document.getElementsByName("loanTerm").item(0))
+      .then(lt => {
+        should.exist(lt)
+      });
+  });
+
+  it("should contain an input element named 'period'", function() {
+    return pageObject
+      .evaluate(() => document.getElementsByName("period").item(0))
+      .then(period => {
+        should.exist(period)
+      });
+  });
+
+  it("should have a button with an id of 'calculate'", function() {
+    return pageObject
+      .evaluate(() => document.getElementById("calculate"))
+      .then((btn) => {
+        should.exist(btn)
       });
   });
 
